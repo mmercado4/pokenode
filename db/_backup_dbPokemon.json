@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "bulbasur",
+    "type": "planta"
+  },
+  {
+    "id": 2,
+    "name": "pikachu",
+    "type": "eléctrico"
+  },
+  {
+    "id": 3,
+    "name": "charmander",
+    "type": "fuego"
+  }
+]
