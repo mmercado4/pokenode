@@ -35,7 +35,7 @@ api.post("/api/pokemons", (request, response) => {
       if (error) throw error;
       const allPokemons = JSON.parse(data);
       const newPokemon = {
-        id: allPokemons.length + 1,
+        id: Math.max(...allPokemons.map((pokemon) => pokemon.id)) + 1,
         name: request.body.name,
         type: request.body.type,
       };
@@ -60,6 +60,53 @@ api.post("/api/pokemons", (request, response) => {
               method: "POST",
               message: "Pokemon añadido correctamente",
               newPokemon: newPokemon,
+            });
+          }
+        }
+      );
+    });
+  }
+});
+
+//DELETE
+api.delete("/api/pokemons", (request, response) => {
+  const id = Number.parseInt(request.body.id);
+  if (!id) {
+    response.status(400).send({
+      success: false,
+      url: "/api/pokemons",
+      method: "DELETE",
+      message: "Id is required",
+    });
+  } else {
+    fs.readFile("db/dbPokemon.json", (error, data) => {
+      if (error) throw error;
+      const allPokemons = JSON.parse(data);
+      const deletedIndex = allPokemons.findIndex(
+        (pokemon) => pokemon.id === id
+      );
+      allPokemons.splice(deletedIndex, 1);
+      //También se puede hacer un filter a la inversa para obtener todos los elementos menos el que hay que eliminar
+
+      fs.writeFile(
+        "db/dbPokemon.json",
+        JSON.stringify(allPokemons),
+        (error) => {
+          if (error) {
+            response.status(400).send({
+              success: false,
+              url: "/api/pokemons",
+              method: "DELETE",
+              message: "Delete pokemon failed!",
+              error: error,
+            });
+          } else {
+            response.status(200).send({
+              success: true,
+              url: "/api/pokemons",
+              method: "DELETE",
+              message: "Pokemon deleted successfully!",
+              pokemonId: id,
             });
           }
         }
