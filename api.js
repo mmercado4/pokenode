@@ -115,6 +115,41 @@ api.delete("/api/pokemons", (request, response) => {
   }
 });
 
+//GET ONE POKEMON. CON PARAMS
+api.get("/api/onepokemon", (request, response) => {
+  const id = Number.parseInt(request.query.id);
+  if (!id) {
+    response.status(400).send({
+      success: false,
+      url: "/api/pokemons",
+      method: "GET",
+      message: "id is required",
+    });
+  } else {
+    fs.readFile("db/dbPokemon.json", (error, data) => {
+      if (error) throw error; //Similar al console.error. Elevar o notificar una excepción.
+      const pokemonJSON = JSON.parse(data); //Data no lo lee como un JSON, sino como texto plano.
+      const onePokemon = pokemonJSON.filter((pokemon) => pokemon.id === id);
+      if (onePokemon.length === 0) {
+        response.status(200).send({
+          success: true,
+          url: "/api/onepokemon",
+          method: "GET",
+          message: "Pokemon not found!",
+        });
+      } else {
+        response.status(200).send({
+          success: true,
+          url: "/api/onepokemon",
+          method: "GET",
+          message: "Pokemon found!",
+          pokemon: onePokemon, //Ojo devuelve un array con un objeto dentro.
+        });
+      }
+    });
+  }
+});
+
 api.listen(1212, () => {
   console.log("API running in port 1212");
 });
