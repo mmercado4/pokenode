@@ -1,0 +1,22 @@
+{
+  "name": "pokenode",
+  "version": "1.0.0",
+  "description": "API de pokemon",
+  "main": "api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmercado4/pokenode.git"
+  },
+  "author": "Miguel Mercado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmercado4/pokenode/issues"
+  },
+  "homepage": "https://github.com/mmercado4/pokenode#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
