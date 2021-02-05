@@ -115,7 +115,7 @@ api.delete("/api/pokemons", (request, response) => {
   }
 });
 
-//GET ONE POKEMON. CON PARAMS
+//GET ONE POKEMON. CON QUERY PARAMS.
 api.get("/api/onepokemon", (request, response) => {
   const id = Number.parseInt(request.query.id);
   if (!id) {
@@ -177,6 +177,7 @@ api.get("/api/pokemons/:id", (request, response) => {
   });
 });
 
+//PUT
 api.put("/api/pokemons/:id", (request, response) => {
   let id = Number.parseInt(request.params.id);
   fs.readFile("db/dbPokemon.json", (error, data) => {
@@ -211,6 +212,41 @@ api.put("/api/pokemons/:id", (request, response) => {
           message: "Pokemon modified!",
         });
       }
+    });
+  });
+});
+
+//GET Pages
+api.get("/api/pokemons/page/:page", (request, response) => {
+  let page = Number.parseInt(request.params.page);
+  //Sacamos el indice del array que queremos mostrar.
+  fs.readFile("db/dbPokemon.json", (error, data) => {
+    if (error) throw error;
+    let pokeList = JSON.parse(data);
+    const PAGE_SIZE = 8;
+    let start = page * PAGE_SIZE - PAGE_SIZE;
+    let end = start + PAGE_SIZE;
+    let pokePage = pokeList.slice(start, end);
+    //Pokelist es un array. Podemos montar arrays de arrays de 5 elementos dentro de cada uno. ESTO ESTÁ BIEN, PERO NO ES LO MEJOR.
+    /*
+    let pokePages = []; //Array de arrays.
+    let pokePage = [];
+    pokeList.map((pokemon) => {
+      if (pokePage.length === 5) {
+        pokePages.push(pokePage);
+        pokePage = [];
+      }
+      pokePage.push(pokemon);
+      if (pokeList.length === pokeList.indexOf(pokemon) + 1) {
+        pokePages.push(pokePage);
+      }
+    });
+    */
+    response.status(200).send({
+      success: true,
+      url: `/api/pokemons/pages/${page}`,
+      method: "GET",
+      pokemons: pokePage,
     });
   });
 });
