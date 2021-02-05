@@ -4,11 +4,13 @@ const bodyParser = require("body-parser");
 
 const api = express();
 
+const DB_POKEMON = "db/dbPokemon.json";
+
 api.use(bodyParser.urlencoded({ extended: true })); //Decodificamos la info del body.
 
 //GET
 api.get("/api/pokemons", (request, response) => {
-  fs.readFile("db/dbPokemon.json", (error, data) => {
+  fs.readFile(DB_POKEMON, (error, data) => {
     if (error) throw error; //Similar al console.error. Elevar o notificar una excepción.
     const pokemonJSON = JSON.parse(data); //Data no lo lee como un JSON, sino como texto plano.
     response.status(200).send({
@@ -31,7 +33,7 @@ api.post("/api/pokemons", (request, response) => {
     });
   } else {
     // En request.query tenemos todos los parámetros que se envíen al microservicio.
-    fs.readFile("db/dbPokemon.json", (error, data) => {
+    fs.readFile(DB_POKEMON, (error, data) => {
       if (error) throw error;
       const allPokemons = JSON.parse(data);
       const newPokemon = {
@@ -41,29 +43,25 @@ api.post("/api/pokemons", (request, response) => {
       };
       allPokemons.push(newPokemon);
 
-      fs.writeFile(
-        "db/dbPokemon.json",
-        JSON.stringify(allPokemons),
-        (error) => {
-          if (error) {
-            response.status(400).send({
-              success: false,
-              url: "/api/pokemons",
-              method: "POST",
-              message: "Fallo al añadir el pokemon",
-              error: error,
-            });
-          } else {
-            response.status(201).send({
-              success: true,
-              url: "/api/pokemons",
-              method: "POST",
-              message: "Pokemon añadido correctamente",
-              newPokemon: newPokemon,
-            });
-          }
+      fs.writeFile(DB_POKEMON, JSON.stringify(allPokemons), (error) => {
+        if (error) {
+          response.status(400).send({
+            success: false,
+            url: "/api/pokemons",
+            method: "POST",
+            message: "Fallo al añadir el pokemon",
+            error: error,
+          });
+        } else {
+          response.status(201).send({
+            success: true,
+            url: "/api/pokemons",
+            method: "POST",
+            message: "Pokemon añadido correctamente",
+            newPokemon: newPokemon,
+          });
         }
-      );
+      });
     });
   }
 });
@@ -79,7 +77,7 @@ api.delete("/api/pokemons", (request, response) => {
       message: "Id is required",
     });
   } else {
-    fs.readFile("db/dbPokemon.json", (error, data) => {
+    fs.readFile(DB_POKEMON, (error, data) => {
       if (error) throw error;
       const allPokemons = JSON.parse(data);
       const deletedIndex = allPokemons.findIndex(
@@ -88,29 +86,25 @@ api.delete("/api/pokemons", (request, response) => {
       allPokemons.splice(deletedIndex, 1);
       //También se puede hacer un filter a la inversa para obtener todos los elementos menos el que hay que eliminar
 
-      fs.writeFile(
-        "db/dbPokemon.json",
-        JSON.stringify(allPokemons),
-        (error) => {
-          if (error) {
-            response.status(400).send({
-              success: false,
-              url: "/api/pokemons",
-              method: "DELETE",
-              message: "Delete pokemon failed!",
-              error: error,
-            });
-          } else {
-            response.status(200).send({
-              success: true,
-              url: "/api/pokemons",
-              method: "DELETE",
-              message: "Pokemon deleted successfully!",
-              pokemonId: id,
-            });
-          }
+      fs.writeFile(DB_POKEMON, JSON.stringify(allPokemons), (error) => {
+        if (error) {
+          response.status(400).send({
+            success: false,
+            url: "/api/pokemons",
+            method: "DELETE",
+            message: "Delete pokemon failed!",
+            error: error,
+          });
+        } else {
+          response.status(200).send({
+            success: true,
+            url: "/api/pokemons",
+            method: "DELETE",
+            message: "Pokemon deleted successfully!",
+            pokemonId: id,
+          });
         }
-      );
+      });
     });
   }
 });
@@ -126,7 +120,7 @@ api.get("/api/onepokemon", (request, response) => {
       message: "id is required",
     });
   } else {
-    fs.readFile("db/dbPokemon.json", (error, data) => {
+    fs.readFile(DB_POKEMON, (error, data) => {
       if (error) throw error; //Similar al console.error. Elevar o notificar una excepción.
       const pokemonJSON = JSON.parse(data); //Data no lo lee como un JSON, sino como texto plano.
       const onePokemon = pokemonJSON.filter((pokemon) => pokemon.id === id);
@@ -154,7 +148,7 @@ api.get("/api/onepokemon", (request, response) => {
 api.get("/api/pokemons/:id", (request, response) => {
   console.log(request.params); //Nuestro ID está en la propiedad PARAMS de la REQUEST.
   let id = Number.parseInt(request.params.id);
-  fs.readFile("db/dbPokemon.json", (error, data) => {
+  fs.readFile(DB_POKEMON, (error, data) => {
     if (error) throw error;
     let pokemonList = JSON.parse(data);
     let pokemon = pokemonList.filter((pokemon) => pokemon.id === id);
@@ -180,7 +174,7 @@ api.get("/api/pokemons/:id", (request, response) => {
 //PUT
 api.put("/api/pokemons/:id", (request, response) => {
   let id = Number.parseInt(request.params.id);
-  fs.readFile("db/dbPokemon.json", (error, data) => {
+  fs.readFile(DB_POKEMON, (error, data) => {
     if (error) throw error;
     let pokeList = JSON.parse(data);
     let pokeIndex = pokeList.findIndex((pok) => pok.id === id);
@@ -196,7 +190,7 @@ api.put("/api/pokemons/:id", (request, response) => {
     }
     pokeList[pokeIndex] = pokemonWanted;
 
-    fs.writeFile("db/dbPokemon.json", JSON.stringify(pokeList), (error) => {
+    fs.writeFile(DB_POKEMON, JSON.stringify(pokeList), (error) => {
       if (error) {
         response.status(400).send({
           success: false,
@@ -220,7 +214,7 @@ api.put("/api/pokemons/:id", (request, response) => {
 api.get("/api/pokemons/page/:page", (request, response) => {
   let page = Number.parseInt(request.params.page);
   //Sacamos el indice del array que queremos mostrar.
-  fs.readFile("db/dbPokemon.json", (error, data) => {
+  fs.readFile(DB_POKEMON, (error, data) => {
     if (error) throw error;
     let pokeList = JSON.parse(data);
     const PAGE_SIZE = 8;
