@@ -161,19 +161,57 @@ api.get("/api/pokemons/:id", (request, response) => {
     if (pokemon.length === 0) {
       response.status(200).send({
         success: true,
-        url: "/api/onepokemon",
+        url: "/api/pokemons",
         method: "GET",
         message: "Pokemon not found!",
       });
     } else {
       response.status(200).send({
         success: true,
-        url: "/api/onepokemon",
+        url: "/api/pokemons",
         method: "GET",
         message: "Pokemon found!",
         pokemon: pokemon, //Ojo devuelve un array con un objeto dentro.
       });
     }
+  });
+});
+
+api.put("/api/pokemons/:id", (request, response) => {
+  let id = Number.parseInt(request.params.id);
+  fs.readFile("db/dbPokemon.json", (error, data) => {
+    if (error) throw error;
+    let pokeList = JSON.parse(data);
+    let pokeIndex = pokeList.findIndex((pok) => pok.id === id);
+    let pokemonWanted = pokeList.find((pok) => pok.id === id);
+    let modifiedData = request.body;
+    //Se podría intentar hacer con un map para que, si se hace match, que se cambie todo.
+    for (let prop in pokemonWanted) {
+      for (let modProp in modifiedData) {
+        if (modProp === prop) {
+          pokemonWanted[prop] = modifiedData[modProp];
+        }
+      }
+    }
+    pokeList[pokeIndex] = pokemonWanted;
+
+    fs.writeFile("db/dbPokemon.json", JSON.stringify(pokeList), (error) => {
+      if (error) {
+        response.status(400).send({
+          success: false,
+          url: `/api/pokemons/${id}`,
+          method: "PUT",
+          message: "Can not modify this pokemon!",
+        });
+      } else {
+        response.status(200).send({
+          success: true,
+          url: `/api/pokemons/${id}`,
+          method: "PUT",
+          message: "Pokemon modified!",
+        });
+      }
+    });
   });
 });
 
