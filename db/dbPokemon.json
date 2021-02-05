@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "name": "bulbasur",
+        "name": "bulbasaur modificado",
         "type": "planta"
     },
     {
@@ -16,17 +16,157 @@
     },
     {
         "id": 4,
-        "name": "metapod",
-        "type": "planta"
+        "name": "pikachu",
+        "type": "eléctrico"
     },
     {
         "id": 5,
-        "name": "blastoise",
-        "type": "agua"
+        "name": "mew",
+        "type": "psíquico"
     },
     {
         "id": 6,
-        "name": "mew",
+        "name": "squirtel",
+        "type": "agua"
+    },
+    {
+        "id": 7,
+        "name": "mewtwo",
         "type": "psíquico"
+    },
+    {
+        "id": 8,
+        "name": "ivysaur",
+        "type": "planta"
+    },
+    {
+        "id": 9,
+        "name": "venusaur",
+        "type": "planta"
+    },
+    {
+        "id": 10,
+        "name": "charmeleon",
+        "type": "fuego"
+    },
+    {
+        "id": 11,
+        "name": "charizard",
+        "type": "fuego"
+    },
+    {
+        "id": 12,
+        "name": "wartortle",
+        "type": "agua"
+    },
+    {
+        "id": 13,
+        "name": "caterpie",
+        "type": "bicho"
+    },
+    {
+        "id": 14,
+        "name": "metapod",
+        "type": "bicho"
+    },
+    {
+        "id": 15,
+        "name": "pidgey",
+        "type": "pajaro"
+    },
+    {
+        "id": 16,
+        "name": "pidgeotto",
+        "type": "pajaro"
+    },
+    {
+        "id": 17,
+        "name": "pidgeot",
+        "type": "pajaro"
+    },
+    {
+        "id": 18,
+        "name": "rattata",
+        "type": "bicho"
+    },
+    {
+        "id": 19,
+        "name": "raticate",
+        "type": "bicho"
+    },
+    {
+        "id": 20,
+        "name": "spearow",
+        "type": "pajaro"
+    },
+    {
+        "id": 21,
+        "name": "fearow",
+        "type": "pajaro"
+    },
+    {
+        "id": 22,
+        "name": "ekans",
+        "type": "bicho"
+    },
+    {
+        "id": 23,
+        "name": "raichu",
+        "type": "electrico"
+    },
+    {
+        "id": 24,
+        "name": "nidorina",
+        "type": "electrico"
+    },
+    {
+        "id": 25,
+        "name": "nidoking",
+        "type": "roca"
+    },
+    {
+        "id": 26,
+        "name": "vulpix",
+        "type": "roca"
+    },
+    {
+        "id": 27,
+        "name": "zubat",
+        "type": "pajaro"
+    },
+    {
+        "id": 28,
+        "name": "golbat",
+        "type": "pajaro"
+    },
+    {
+        "id": 29,
+        "name": "hypno",
+        "type": "psíquico"
+    },
+    {
+        "id": 30,
+        "name": "krabby",
+        "type": "psíquico"
+    },
+    {
+        "id": 31,
+        "name": "voltorb",
+        "type": "eléctrico"
+    },
+    {
+        "id": 32,
+        "name": "paras",
+        "type": "eléctrico"
+    },
+    {
+        "id": 33,
+        "name": "vileplume",
+        "type": "eléctrico"
+    },
+    {
+        "id": 34,
+        "name": "gloom",
+        "type": "planta"
     }
 ]
