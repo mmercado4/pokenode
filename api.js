@@ -150,6 +150,33 @@ api.get("/api/onepokemon", (request, response) => {
   }
 });
 
+//GET UN POKEMON PERO POR UN MÉTODO MEJOR. Usar url con params más elegantes. Buenas prácticas.
+api.get("/api/pokemons/:id", (request, response) => {
+  console.log(request.params); //Nuestro ID está en la propiedad PARAMS de la REQUEST.
+  let id = Number.parseInt(request.params.id);
+  fs.readFile("db/dbPokemon.json", (error, data) => {
+    if (error) throw error;
+    let pokemonList = JSON.parse(data);
+    let pokemon = pokemonList.filter((pokemon) => pokemon.id === id);
+    if (pokemon.length === 0) {
+      response.status(200).send({
+        success: true,
+        url: "/api/onepokemon",
+        method: "GET",
+        message: "Pokemon not found!",
+      });
+    } else {
+      response.status(200).send({
+        success: true,
+        url: "/api/onepokemon",
+        method: "GET",
+        message: "Pokemon found!",
+        pokemon: pokemon, //Ojo devuelve un array con un objeto dentro.
+      });
+    }
+  });
+});
+
 api.listen(1212, () => {
   console.log("API running in port 1212");
 });
