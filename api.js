@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const bodyParser = require("body-parser");
+const { response } = require("express");
 
 const api = express();
 
@@ -259,6 +260,34 @@ api.get("/api/pokemon/pageoffset", (request, response) => {
       method: "GET",
       pokemons: myList,
     });
+  });
+});
+
+//GET LOCATION
+api.get("/api/pokemons/:id/locations/:locationId", (request, response) => {
+  //const { id, locationId } = request.params;
+  const id = Number.parseInt(request.params.id);
+  const locationId = Number.parseInt(request.params.locationId);
+  fs.readFile(DB_POKEMON, (error, data) => {
+    if (error) throw error;
+    let pokeList = JSON.parse(data);
+    let pokemon = pokeList.find((pokemon) => pokemon.id === id);
+    let location = pokemon.locations.find((loc) => loc.id === locationId);
+    if (location) {
+      response.status(200).send({
+        success: true,
+        url: `/api/pokemon/location`,
+        method: "GET",
+        location: location,
+      });
+    } else {
+      response.status(200).send({
+        success: true,
+        url: `/api/pokemon/location`,
+        method: "GET",
+        message: `location not found`,
+      });
+    }
   });
 });
 
