@@ -245,6 +245,23 @@ api.get("/api/pokemons/page/:page", (request, response) => {
   });
 });
 
+//GET Pages LIMIT-OFFSET
+api.get("/api/pokemon/pageoffset", (request, response) => {
+  fs.readFile(DB_POKEMON, (error, data) => {
+    if (error) throw error;
+    let pokeList = JSON.parse(data);
+    let offset = Number.parseInt(request.query.offset);
+    let limit = Number.parseInt(request.query.limit);
+    let myList = pokeList.slice(offset, offset + limit);
+    response.status(200).send({
+      success: true,
+      url: `/api/pokemon/pagesoffset`,
+      method: "GET",
+      pokemons: myList,
+    });
+  });
+});
+
 api.listen(1212, () => {
   console.log("API running in port 1212");
 });
