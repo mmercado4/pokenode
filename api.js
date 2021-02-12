@@ -7,7 +7,24 @@ const api = express();
 
 const DB_POKEMON = "db/dbPokemon.json";
 
+api.use(bodyParser.json());
 api.use(bodyParser.urlencoded({ extended: true })); //Decodificamos la info del body.
+
+api.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+  api.options("*", (req, res) => {
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET, PATCH, PUT, POST, DELETE, OPTIONS"
+    );
+    res.send();
+  });
+});
 
 //GET
 api.get("/api/pokemons", (request, response) => {
