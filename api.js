@@ -309,6 +309,8 @@ api.get("/api/pokemons/:id/locations/:locationId", (request, response) => {
   });
 });
 
-api.listen(1212, () => {
-  console.log("API running in port 1212");
+const PORT = process.env.PORT || 1212;
+
+api.listen(PORT, () => {
+  console.log(`API running in port ${PORT}`);
 });
