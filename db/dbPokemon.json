@@ -1,21 +1,28 @@
 [
     {
         "id": 1,
-        "name": "bulbasaur modificado",
-        "type": "planta"
+        "name": "bulbasaur",
+        "type": "planta",
+        "locations": [
+            {
+                "id": 1,
+                "alt": "10.5465",
+                "long": "10.2587"
+            },
+            {
+                "id": 2,
+                "alt": "20.5465",
+                "long": "20.2587"
+            },
+            {
+                "id": 3,
+                "alt": "30.5465",
+                "long": "30.2587"
+            }
+        ]
     },
     {
         "id": 2,
-        "name": "pikachu",
-        "type": "eléctrico"
-    },
-    {
-        "id": 3,
-        "name": "charmander",
-        "type": "fuego"
-    },
-    {
-        "id": 4,
         "name": "pikachu",
         "type": "eléctrico"
     },
@@ -32,7 +39,7 @@
     {
         "id": 7,
         "name": "mewtwo",
-        "type": "psíquico"
+        "type": "psykik"
     },
     {
         "id": 8,
@@ -168,5 +175,25 @@
         "id": 34,
         "name": "gloom",
         "type": "planta"
+    },
+    {
+        "id": 35,
+        "name": "Michi",
+        "type": "Perro"
+    },
+    {
+        "id": 36,
+        "name": "momo",
+        "type": "gato"
+    },
+    {
+        "id": 37,
+        "name": "mona",
+        "type": "perro"
+    },
+    {
+        "id": 38,
+        "name": "keller",
+        "type": "perro"
     }
 ]

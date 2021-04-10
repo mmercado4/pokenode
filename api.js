@@ -1,7 +1,6 @@
 const express = require("express");
 const fs = require("fs");
 const bodyParser = require("body-parser");
-const { response } = require("express");
 
 const api = express();
 
@@ -235,10 +234,11 @@ api.get("/api/pokemons/page/:page", (request, response) => {
   fs.readFile(DB_POKEMON, (error, data) => {
     if (error) throw error;
     let pokeList = JSON.parse(data);
-    const PAGE_SIZE = 8;
+    const PAGE_SIZE = 10;
     let start = page * PAGE_SIZE - PAGE_SIZE;
     let end = start + PAGE_SIZE;
     let pokePage = pokeList.slice(start, end);
+    let totalPages = Math.round(pokeList.length / PAGE_SIZE);
     //Pokelist es un array. Podemos montar arrays de arrays de 5 elementos dentro de cada uno. ESTO ESTÁ BIEN, PERO NO ES LO MEJOR.
     /*
     let pokePages = []; //Array de arrays.
@@ -258,6 +258,7 @@ api.get("/api/pokemons/page/:page", (request, response) => {
       success: true,
       url: `/api/pokemons/pages/${page}`,
       method: "GET",
+      pages: totalPages,
       pokemons: pokePage,
     });
   });
